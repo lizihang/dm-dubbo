@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dm.system.dao.SysDAO">
+
+    <select id="getMenus" resultMap="menusResultMap">
+        select m.id         m_id,
+               m.name       m_name,
+               m.router     m_router,
+               m.icon_class m_icon_class,
+               m.group      m_group,
+               m.idx        m_idx,
+               m.level      m_level,
+               m.parent_id  m_parent_id,
+               g.*
+        from
+             dm_sys_menu m
+        left join
+             dm_sys_menu g
+        on
+            m.id = g.parent_id
+        having
+            m.level = 1
+        order by
+            m.idx asc, g.idx asc
+    </select>
+
+    <!--
+        问题描述：在使用mybatis进行多表联合查询时，如果两张表中的字段名称形同，会出现无法正常映射的问题。
+        解决办法：在查询时，给重复的字段起别名，然后在resultMap中使用别名进行映射。
+        column：sql中的列名，如果有别名，写别名
+        property：对应实体对象的属性
+    -->
+    <resultMap type="Menus" id="menusResultMap">
+        <id column="m_id" property="id"/>
+        <result column="m_name" property="name"/>
+        <result column="m_router" property="router"/>
+        <result column="m_icon_class" property="icon_class"/>
+        <result column="m_group" property="group"/>
+        <result column="m_idx" property="idx"/>
+        <result column="m_level" property="level"/>
+        <result column="m_parent_id" property="parent_id"/>
+        <collection property="subMenus" ofType="Menu">
+            <id column="id" property="id"/>
+            <result column="name" property="name"/>
+            <result column="router" property="router"/>
+            <result column="icon_class" property="icon_class"/>
+            <result column="group" property="group"/>
+            <result column="idx" property="idx"/>
+            <result column="level" property="level"/>
+            <result column="parent_id" property="parent_id"/>
+        </collection>
+    </resultMap>
+
+
+    <select id="queryDictList" resultMap="dictResultMap" parameterType="DmDictQueryParams">
+        select
+        m.dict_id m_dict_id, m.dict_name, m.status, m.remark, m.create_user, m.create_time, m.modify_user, m.modify_time,
+        g.id, g.dict_id, g.dict_key, g.dict_value
+        from
+        dm_sys_dict m
+        left join
+        dm_sys_dictinfo g
+        on
+        m.dict_id = g.dict_id
+        <where>
+            <if test="dictId != null">
+                and dict_id like CONCAT('%',#{dictId,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="dictName != null">
+                and dict_name like CONCAT('%',#{dictName,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="status != null">
+                and m.status = #{status}
+            </if>
+        </where>
+    </select>
+
+    <resultMap type="Dict" id="dictResultMap">
+        <id column="m_dict_id" property="dictId"/>
+        <result column="dict_name" property="dictName"/>
+        <result column="status" property="status"/>
+        <result column="remark" property="remark"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_time" property="createTime"/>
+        <result column="modify_user" property="modifyUser"/>
+        <result column="modify_time" property="modifyTime"/>
+        <collection property="dictInfoList" ofType="DictInfo">
+            <id column="id" property="id"/>
+            <result column="dict_id" property="dictId"/>
+            <result column="dict_key" property="dictKey"/>
+            <result column="dict_value" property="dictValue"/>
+        </collection>
+    </resultMap>
+
+    <select id="queryDictTotal" resultType="int">
+        select count(1) from dm_sys_dict
+        <where>
+            <if test="dictName != null">
+                and dict_name like CONCAT('%',#{dictName,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+        </where>
+    </select>
+
+    <insert id="addDict" parameterType="Dict" keyProperty="dict_id">
+        insert into dm_sys_dict
+        values(#{dictId},#{dictName},#{status},#{remark},#{createUser},#{createTime},#{modifyUser},#{modifyTime})
+    </insert>
+
+    <update id="updateDict" parameterType="Dict">
+        update dm_sys_dict
+        <set>
+            <if test="dictId != null">dict_id=#{dictId},</if>
+            <if test="dictName != null">dict_name=#{dictName},</if>
+            <if test="status != null">status=#{status},</if>
+            <if test="remark != null">remark=#{remark},</if>
+            <if test="modifyUser != null">modify_user=#{modifyUser},</if>
+            <if test="modifyTime != null">modify_time=#{modifyTime}</if>
+        </set>
+        <where>
+            dict_id=#{dictId}
+        </where>
+    </update>
+
+    <select id="queryDictInfo" resultType="DictInfo" parameterType="string">
+        select id,
+               dict_id,
+               dict_key,
+               dict_value
+        from dm_sys_dictinfo
+        where dict_id = #{dictId}
+    </select>
+
+    <delete id="deleteDict" parameterType="string">
+        delete from dm_sys_dict where dict_id = #{dictId}
+    </delete>
+
+    <delete id="deleteDictInfo" parameterType="string">
+        delete from dm_sys_dictinfo where dict_id = #{dictId}
+    </delete>
+
+</mapper>
