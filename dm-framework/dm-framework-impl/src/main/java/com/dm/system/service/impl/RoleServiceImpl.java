@@ -6,8 +6,8 @@ import com.dm.system.param.DmRoleQueryParams;
 import com.dm.system.po.DmRole;
 import com.dm.system.service.RoleService;
 import com.github.pagehelper.PageHelper;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.apache.dubbo.apidocs.annotations.ApiModule;
+import org.apache.dubbo.config.annotation.DubboService;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -24,8 +24,8 @@ import java.util.List;
  * <p>类全名：com.dm.system.service.impl.RoleServiceImpl</p>
  * 查看帮助：<a href="" target="_blank"></a>
  */
-@Service
-@Transactional
+@ApiModule(value = "角色service", apiInterface = RoleService.class)
+@DubboService
 public class RoleServiceImpl implements RoleService
 {
 	@Resource

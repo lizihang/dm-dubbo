@@ -1,0 +1,29 @@
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://dubbo.apache.org/schema/dubbo http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
+    <!-- 应用信息 -->
+    <dubbo:application name="demo-consumer"/>
+    <!-- 注册中心 -->
+    <dubbo:registry group="aaa" address="zookeeper://127.0.0.1:2181"/>
+    <!-- 引用配置 -->
+    <dubbo:reference id="sysService" check="false" interface="com.dm.system.service.SysService"/>
+    <!--
+    不同粒度配置的覆盖关系
+        以 timeout 为例
+        方法级优先，接口级次之，全局配置再次之。
+        如果级别一样，则消费方优先，提供方次之。
+
+        建议由服务提供方设置超时，因为一个方法需要执行多长时间，服务提供方更清楚，如果一个消费方同时引用多个服务，就不需要关心每个服务的超时设置
+    -->
+
+    <!--
+    配置中心（v2.7.0）在 Dubbo 中承担两个职责：
+        1.外部化配置。启动配置的集中式存储 （简单理解为 dubbo.properties 的外部化存储）。
+        2.服务治理。服务治理规则的存储与通知。
+
+        spring配置文件方式：dubbo.config-center.address=zookeeper://127.0.0.1:2181
+    -->
+    <dubbo:config-center address="zookeeper://127.0.0.1:2181"/>
+</beans>

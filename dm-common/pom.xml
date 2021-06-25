@@ -12,6 +12,7 @@
 
     <artifactId>dm-common</artifactId>
     <name>dm-common</name>
+    <packaging>jar</packaging>
 
     <dependencies>
         <dependency>

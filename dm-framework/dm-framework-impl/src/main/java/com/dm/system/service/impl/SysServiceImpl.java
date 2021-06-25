@@ -9,8 +9,8 @@ import com.dm.system.service.SysService;
 import com.dm.system.vo.Menus;
 import com.dm.util.StrUtil;
 import com.github.pagehelper.PageHelper;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.apache.dubbo.apidocs.annotations.ApiModule;
+import org.apache.dubbo.config.annotation.DubboService;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -27,8 +27,8 @@ import java.util.List;
  * <p>类全名：com.dm.system.service.impl.SysServiceImpl</p>
  * 查看帮助：<a href="" target="_blank"></a>
  */
-@Service
-@Transactional
+@ApiModule(value = "系统service", apiInterface = SysService.class)
+@DubboService
 public class SysServiceImpl implements SysService
 {
 	@Resource
