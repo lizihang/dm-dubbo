@@ -1,5 +1,6 @@
 package com.dm.goods.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.dm.goods.param.GoodsQueryParams;
 import com.dm.goods.po.Goods;
 import org.apache.ibatis.annotations.Mapper;
@@ -19,7 +20,7 @@ import java.util.List;
  * 查看帮助：<a href="" target="_blank"></a>
  */
 @Mapper
-public interface GoodsDAO
+public interface GoodsDAO extends BaseMapper<Goods>
 {
 	List<Goods> queryGoodsList(GoodsQueryParams params);
 

@@ -32,4 +32,29 @@ public interface GoodsService
 	 * @return
 	 */
 	int queryTotal(GoodsQueryParams params);
+
+	/**
+	 * 根据id查询商品信息
+	 * @param id
+	 * @return
+	 */
+	Goods queryGoodsById(int id);
+
+	/**
+	 * 新增商品信息
+	 * @param goods
+	 */
+	void addGoods(Goods goods);
+
+	/**
+	 * 修改商品信息
+	 * @param goods
+	 */
+	void updateGoods(Goods goods);
+
+	/**
+	 * 根据id删除商品
+	 * @param id
+	 */
+	void deleteGoodsById(int id);
 }

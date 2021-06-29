@@ -1,5 +1,6 @@
 package com.dm.goods.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dm.goods.dao.GoodsDAO;
 import com.dm.goods.param.GoodsQueryParams;
 import com.dm.goods.po.Goods;
@@ -22,10 +23,10 @@ import java.util.List;
  * 查看帮助：<a href="" target="_blank"></a>
  */
 @DubboService
-public class GoodsServiceImpl implements GoodsService
+public class GoodsServiceImpl extends ServiceImpl<GoodsDAO,Goods> implements GoodsService
 {
 	@Resource
-	GoodsDAO    goodsDAO;
+	GoodsDAO goodsDAO;
 
 	@Override
 	public List<Goods> queryGoodsList(GoodsQueryParams params)
@@ -37,5 +38,26 @@ public class GoodsServiceImpl implements GoodsService
 	public int queryTotal(GoodsQueryParams params)
 	{
 		return goodsDAO.queryTotal(params);
+	}
+
+	@Override
+	public Goods queryGoodsById(int id)
+	{
+		return null;
+	}
+
+	@Override
+	public void addGoods(Goods goods)
+	{
+	}
+
+	@Override
+	public void updateGoods(Goods goods)
+	{
+	}
+
+	@Override
+	public void deleteGoodsById(int id)
+	{
 	}
 }

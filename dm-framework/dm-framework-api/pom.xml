@@ -41,6 +41,12 @@
             <artifactId>curator-x-discovery</artifactId>
         </dependency>
 
+        <!-- mybatis-plus -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>com.dm</groupId>
             <artifactId>dm-common</artifactId>

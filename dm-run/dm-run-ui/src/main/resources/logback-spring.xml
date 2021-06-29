@@ -28,7 +28,7 @@
         </encoder>
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <!-- 文件名规则 -->
-            <fileNamePattern>${log.path}/dm_demo-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <fileNamePattern>${log.path}/dm_ui-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <!-- 日志保留天数 -->
             <maxHistory>30</maxHistory>
             <!-- 单个文件大小 -->
