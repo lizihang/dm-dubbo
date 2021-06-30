@@ -5,7 +5,6 @@ import com.dm.system.dao.RoleDAO;
 import com.dm.system.param.DmRoleQueryParams;
 import com.dm.system.po.DmRole;
 import com.dm.system.service.RoleService;
-import com.github.pagehelper.PageHelper;
 import org.apache.dubbo.apidocs.annotations.ApiModule;
 import org.apache.dubbo.config.annotation.DubboService;
 
@@ -35,7 +34,7 @@ public class RoleServiceImpl implements RoleService
 	public List<DmRole> queryList(DmRoleQueryParams params)
 	{
 		// PageHelper 分页查询，放在查询前面
-		PageHelper.startPage(params.getPageNum(), params.getPageSize());
+		// PageHelper.startPage(params.getPageNum(), params.getPageSize());
 		return roleDAO.queryList(params);
 	}
 

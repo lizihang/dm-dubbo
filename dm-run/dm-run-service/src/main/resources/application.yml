@@ -14,14 +14,22 @@ spring:
   main:
     web-application-type: none
 # mybatis配置
-mybatis:
-  # classpath*:能加载多个路径下的资源文件
+#mybatis:
+#  # classpath*:能加载多个路径下的资源文件
+#  mapper-locations: classpath*:com/dm/mapper/*.xml
+#  type-aliases-package: com.dm
+#  configuration:
+#    # mybatis 打印SQL到控制台
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#    # 开启驼峰命名转换
+#    map-underscore-to-camel-case: true
+
+# mybatis-plus配置
+mybatis-plus:
   mapper-locations: classpath*:com/dm/mapper/*.xml
   type-aliases-package: com.dm
   configuration:
-    # mybatis 打印SQL到控制台
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-    # 开启驼峰命名转换
     map-underscore-to-camel-case: true
 # 日志配置
 logging:

@@ -8,7 +8,6 @@ import com.dm.system.po.DictInfo;
 import com.dm.system.service.SysService;
 import com.dm.system.vo.Menus;
 import com.dm.util.StrUtil;
-import com.github.pagehelper.PageHelper;
 import org.apache.dubbo.apidocs.annotations.ApiModule;
 import org.apache.dubbo.config.annotation.DubboService;
 
@@ -43,7 +42,7 @@ public class SysServiceImpl implements SysService
 	@Override
 	public List<Dict> queryDictList(DmDictQueryParams params)
 	{
-		PageHelper.startPage(params.getPageNum(), params.getPageSize());
+		// PageHelper.startPage(params.getPageNum(), params.getPageSize());
 		return sysDAO.queryDictList(params);
 	}
 

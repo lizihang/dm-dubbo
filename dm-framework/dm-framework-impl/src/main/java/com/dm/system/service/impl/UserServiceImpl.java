@@ -111,7 +111,7 @@ public class UserServiceImpl implements UserService
 		// }
 		// 1.更新数据库
 		user.setModifyTime(DateUtil.getServerDate());
-		userDAO.update(user);
+		userDAO.updateById(user);
 		// 2.更新缓存
 		String key = Constants.USER_KEY + user.getUsername();
 		redisUtil.setCacheObject(key, user);
@@ -124,7 +124,7 @@ public class UserServiceImpl implements UserService
 		DmUser user = new DmUser();
 		user.setId(id);
 		user.setStatus(Constants.STATUS_DELETE);
-		userDAO.update(user);
+		userDAO.updateById(user);
 	}
 
 	@Override

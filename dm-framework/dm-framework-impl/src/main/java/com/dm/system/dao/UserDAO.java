@@ -1,8 +1,9 @@
 package com.dm.system.dao;
 
-import org.apache.ibatis.annotations.Mapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.dm.system.param.DmUserQueryParams;
 import com.dm.system.po.DmUser;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 /**
@@ -19,7 +20,7 @@ import java.util.List;
  * 查看帮助：<a href="" target="_blank"></a>
  */
 @Mapper
-public interface UserDAO
+public interface UserDAO extends BaseMapper<DmUser>
 {
 	List<DmUser> queryList(DmUserQueryParams params);
 
@@ -28,8 +29,4 @@ public interface UserDAO
 	DmUser queryUserByUserName(String username);
 
 	void save(DmUser user);
-
-	void update(DmUser user);
-
-	void deleteById(int id);
 }

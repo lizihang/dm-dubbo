@@ -2,11 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.dm.system.dao.UserDAO">
 
-	<select id="queryList" resultType="DmUser" parameterType="DmUserQueryParams">
+    <select id="queryList" resultType="DmUser" parameterType="DmUserQueryParams">
         select
-            id, username, password, nickname, email, phone, gender, avatar, status, create_user, modify_time, modify_user, create_time
+        id, username, password, nickname, email, phone, gender, avatar, status, create_user, modify_time, modify_user, create_time
         from
-            dm_user
+        dm_user
         <where>
             <if test="username != null">
                 and username like CONCAT('%',#{username,jdbcType=VARCHAR},'%')
@@ -41,21 +41,31 @@
         </where>
     </select>
 
-	<select id="queryUserByUserName" resultType="DmUser">
-        select
-            id, username, password, nickname, email, phone, gender, avatar, status, create_user, modify_time, modify_user, create_time
-        from
-            dm_user
-        where
-            username = #{username}
+    <select id="queryUserByUserName" resultType="DmUser">
+        select id,
+               username,
+               password,
+               nickname,
+               email,
+               phone,
+               gender,
+               avatar,
+               status,
+               create_user,
+               modify_time,
+               modify_user,
+               create_time
+        from dm_user
+        where username = #{username}
     </select>
 
-	<insert id="save" parameterType="DmUser" useGeneratedKeys="true" keyProperty="id">
+    <insert id="save" parameterType="DmUser" useGeneratedKeys="true" keyProperty="id">
         insert into dm_user
-        values(#{id},#{username},#{password},#{nickname},#{email},#{phone},#{gender},#{avatar},#{status},#{createUser},#{createTime},#{modifyUser},#{modifyTime})
+        values (#{id}, #{username}, #{password}, #{nickname}, #{email}, #{phone}, #{gender}, #{avatar}, #{status}, #{createUser}, #{createTime}, #{modifyUser}, #{modifyTime})
     </insert>
 
-	<update id="update" parameterType="DmUser">
+    <!-- mybatis-plus 实现
+    <update id="myUpdate" parameterType="DmUser">
         update dm_user
         <set>
             <if test="password != null">password=#{password},</if>
@@ -71,9 +81,5 @@
             id=#{id}
         </where>
     </update>
-
-	<delete id="deleteById" parameterType="int">
-        delete from dm_user where id = #{id}
-    </delete>
-
+    -->
 </mapper>

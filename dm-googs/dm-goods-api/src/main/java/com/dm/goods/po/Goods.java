@@ -20,7 +20,7 @@ public class Goods extends BasePO
 {
 	private static final long       serialVersionUID = 477629201103679691L;
 	/** id */
-	private              int        id;
+	private              Integer    id;
 	/** 商品名称 */
 	private              String     goodsName;
 	/** 价格 */
@@ -30,12 +30,12 @@ public class Goods extends BasePO
 	/** 描述 */
 	private              String     remark;
 
-	public int getId()
+	public Integer getId()
 	{
 		return id;
 	}
 
-	public void setId(int id)
+	public void setId(Integer id)
 	{
 		this.id = id;
 	}
