@@ -27,13 +27,15 @@ public class MyMetaObjectHandler implements MetaObjectHandler
 	@Override
 	public void insertFill(MetaObject metaObject)
 	{
+		// 对象中不存在的字段，不会处理，也不会报错
 		log.info("start insert fill ....");
 		Date date = DateUtil.getServerDate();
+		// TODO 获取当前登录人
+		String user = "";
+		this.strictInsertFill(metaObject, "createUser", String.class, user);
 		this.strictInsertFill(metaObject, "createTime", Date.class, date);
+		this.strictInsertFill(metaObject, "modifyUser", String.class, user);
 		this.strictInsertFill(metaObject, "modifyTime", Date.class, date);
-		this.strictInsertFill(metaObject, "status", String.class, "00");
-		// 对象中不存在的字段，不会报错
-		this.strictInsertFill(metaObject, "status2", String.class, "00");
 	}
 
 	@Override
@@ -41,6 +43,9 @@ public class MyMetaObjectHandler implements MetaObjectHandler
 	{
 		log.info("start update fill ....");
 		Date date = DateUtil.getServerDate();
+		// TODO 获取当前登录人
+		String user = "";
+		this.strictInsertFill(metaObject, "modifyUser", String.class, user);
 		this.strictInsertFill(metaObject, "modifyTime", Date.class, date);
 	}
 }

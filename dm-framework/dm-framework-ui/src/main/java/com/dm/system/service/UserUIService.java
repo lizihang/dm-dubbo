@@ -1,9 +1,8 @@
 package com.dm.system.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.dm.system.param.DmUserQueryParams;
 import com.dm.system.po.DmUser;
-
-import java.util.List;
 /**
  * <p>标题：</p>
  * <p>功能：</p>
@@ -20,23 +19,22 @@ import java.util.List;
 public interface UserUIService
 {
 	/**
-	 * 查询所有用户
-	 * @return 用户列表
+	 * 查询用户分页数据
+	 * @return 用户分页数据
 	 */
-	List<DmUser> queryListUI(DmUserQueryParams params);
+	Page<DmUser> queryPageUI(DmUserQueryParams params);
 
 	/**
-	 * 查询总数量
-	 * @param params
-	 * @return
-	 */
-	int queryTotalUI(DmUserQueryParams params);
-
-	/**
-	 * 根据用户名查找
+	 * 查询用户信息
 	 * @return 用户对象
 	 */
-	DmUser queryUserByUserNameUI(String username);
+	DmUser queryUserUI(DmUserQueryParams params);
+
+	/**
+	 * 根据用户名查询用户信息
+	 * @return
+	 */
+	DmUser queryUserByUsernameUI(String username);
 
 	/**
 	 * 用户注册
@@ -60,5 +58,5 @@ public interface UserUIService
 	 * 根据用户id删除用户
 	 * @param id id
 	 */
-	void deleteUserByIdUI(int id);
+	void deleteUserUI(int id);
 }

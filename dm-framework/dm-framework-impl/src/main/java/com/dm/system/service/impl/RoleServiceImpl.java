@@ -1,5 +1,7 @@
 package com.dm.system.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.dm.constant.Constants;
 import com.dm.system.dao.RoleDAO;
 import com.dm.system.param.DmRoleQueryParams;
@@ -9,7 +11,6 @@ import org.apache.dubbo.apidocs.annotations.ApiModule;
 import org.apache.dubbo.config.annotation.DubboService;
 
 import javax.annotation.Resource;
-import java.util.List;
 /**
  * <p>标题：</p>
  * <p>功能：</p>
@@ -31,29 +32,30 @@ public class RoleServiceImpl implements RoleService
 	RoleDAO roleDAO;
 
 	@Override
-	public List<DmRole> queryList(DmRoleQueryParams params)
+	public Page<DmRole> queryPage(DmRoleQueryParams params)
 	{
-		// PageHelper 分页查询，放在查询前面
-		// PageHelper.startPage(params.getPageNum(), params.getPageSize());
-		return roleDAO.queryList(params);
+		Page<DmRole> page = new Page<>(params.getPageNum(), params.getPageSize());
+		QueryWrapper<DmRole> wrapper = buildQueryWrapper(params);
+		return roleDAO.selectPage(page, wrapper);
 	}
 
 	@Override
-	public int queryTotal(DmRoleQueryParams params)
+	public DmRole queryRole(DmRoleQueryParams params)
 	{
-		return roleDAO.queryTotal(params);
+		QueryWrapper<DmRole> wrapper = buildQueryWrapper(params);
+		return roleDAO.selectOne(wrapper);
 	}
 
 	@Override
 	public void addRole(DmRole role)
 	{
-		roleDAO.save(role);
+		roleDAO.insert(role);
 	}
 
 	@Override
 	public void updateRole(DmRole role)
 	{
-		roleDAO.update(role);
+		roleDAO.updateById(role);
 	}
 
 	@Override
@@ -62,12 +64,35 @@ public class RoleServiceImpl implements RoleService
 		DmRole role = new DmRole();
 		role.setId(id);
 		role.setStatus(Constants.STATUS_DELETE);
-		roleDAO.update(role);
+		roleDAO.updateById(role);
 	}
 
 	@Override
-	public void deleteRoleById(int id)
+	public void deleteRole(int id)
 	{
 		roleDAO.deleteById(id);
+	}
+
+	/**
+	 * 处理查询wrapper
+	 * @param params
+	 * @return
+	 */
+	private QueryWrapper<DmRole> buildQueryWrapper(DmRoleQueryParams params)
+	{
+		QueryWrapper<DmRole> wrapper = new QueryWrapper<>();
+		if (params.getUsername() != null)
+		{
+			wrapper.like("username", params.getUsername());
+		}
+		if (params.getRoleName() != null)
+		{
+			wrapper.like("role_name", params.getRoleName());
+		}
+		if (params.getStatus() != null)
+		{
+			wrapper.eq("status", params.getStatus());
+		}
+		return wrapper;
 	}
 }

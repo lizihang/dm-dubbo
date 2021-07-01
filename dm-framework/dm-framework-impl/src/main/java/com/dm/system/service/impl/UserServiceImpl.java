@@ -1,22 +1,20 @@
 package com.dm.system.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.dm.constant.Constants;
 import com.dm.system.dao.UserDAO;
 import com.dm.system.param.DmUserQueryParams;
 import com.dm.system.po.DmUser;
 import com.dm.system.service.UserService;
-import com.dm.util.DateUtil;
 import com.dm.util.RedisUtil;
 import org.apache.dubbo.apidocs.annotations.ApiDoc;
 import org.apache.dubbo.apidocs.annotations.ApiModule;
 import org.apache.dubbo.config.annotation.DubboService;
 
 import javax.annotation.Resource;
-import java.util.Date;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 /**
- * <p>标题：</p>
+ * <p>标题：用户service实现类</p>
  * <p>功能：</p>
  * <pre>
  * 其他说明：
@@ -37,87 +35,61 @@ public class UserServiceImpl implements UserService
 	@Resource
 	RedisUtil redisUtil;
 
-	@ApiDoc(value = "查询用户列表", description = "查询用户列表描述", responseClassDescription = "用户列表")
+	@ApiDoc(value = "查询用户分页数据", description = "查询用户分页数据", responseClassDescription = "用户分页数据")
 	@Override
-	public List<DmUser> queryList(DmUserQueryParams params)
+	public Page<DmUser> queryPage(DmUserQueryParams params)
 	{
-		// PageHelper 分页查询，放在查询前面
-		// PageHelper.startPage(params.getPageNum(), params.getPageSize());
-		List<DmUser> data = userDAO.queryList(params);
-		data.forEach(user -> user.setPassword(null));
-		return data;
+		Page<DmUser> page = new Page<>(params.getPageNum(), params.getPageSize());
+		QueryWrapper<DmUser> wrapper = buildQueryWrapper(params);
+		Page<DmUser> dmUserPage = userDAO.selectPage(page, wrapper);
+		dmUserPage.getRecords().forEach(user -> user.setPassword(null));
+		return dmUserPage;
 	}
 
+	@ApiDoc(value = "查询单个用户数据", description = "查询单个用户数据", responseClassDescription = "用户数据")
 	@Override
-	public int queryTotal(DmUserQueryParams params)
+	public DmUser queryUser(DmUserQueryParams params)
 	{
-		return userDAO.queryTotal(params);
+		QueryWrapper<DmUser> wrapper = buildQueryWrapper(params);
+		return userDAO.selectOne(wrapper);
 	}
 
+	@ApiDoc(value = "根据用户名查询用户信息", description = "根据用户名查询用户信息", responseClassDescription = "用户数据")
 	@Override
-	public DmUser queryUserByUserName(String username)
+	public DmUser queryUserByUsername(String username)
 	{
-		String key = Constants.USER_KEY + username;
-		// 1.从缓存中查询数据
-		if (redisUtil.hasKey(key))
-		{
-			return redisUtil.getCacheObject(key);
-		}
-		// 2.缓存中不存在，则查询数据库
-		DmUser user = userDAO.queryUserByUserName(username);
-		/*
-		查询数据库中不存在的数据，会有缓存穿透问题，
-		解决办法：
-		1.将空对象也放入缓存，设置过期时间。
-		之后再查询此username不存在的数据时，从缓存返回，减少数据库访问
-		2.布隆过滤器
-		*/
-		if (user != null)
-		{
-			// 3.将对象存入缓存
-			redisUtil.setCacheObject(key, user);
-		} else
-		{
-			// 将空对象存入缓存
-			redisUtil.setCacheObject(key, null, 600, TimeUnit.SECONDS);
-		}
-		return user;
+		QueryWrapper<DmUser> wrapper = new QueryWrapper<>();
+		wrapper.eq("username", username);
+		return userDAO.selectOne(wrapper);
 	}
 
+	@ApiDoc(value = "注册用户", description = "注册用户", responseClassDescription = "注册用户")
 	@Override
 	public void register(DmUser user)
 	{
-		DmUser userDB = userDAO.queryUserByUserName(user.getUsername());
+		QueryWrapper<DmUser> wrapper = new QueryWrapper<>();
+		wrapper.eq("username", user.getUsername());
+		DmUser userDB = userDAO.selectOne(wrapper);
 		if (userDB != null)
 		{
 			throw new RuntimeException("用户已存在！");
 		}
-		// TODO 密码应该前端也加密
-		// user.setPassword(passwordEncoder.encode(user.getPassword()));
-		// 处理创建人，创建时间字段
-		Date serverDate = DateUtil.getServerDate();
-		user.setCreateTime(serverDate);
-		user.setCreateUser(user.getUsername());
-		userDAO.save(user);
+		userDAO.insert(user);
 	}
 
+	@ApiDoc(value = "更新用户", description = "更新用户", responseClassDescription = "更新用户")
 	@Override
 	public void updateUser(DmUser user)
 	{
-		// TODO 修改为更新有值字段
-		// if (user.getPassword() != null)
-		// {
-		// 	user.setPassword(passwordEncoder.encode(user.getPassword()));
-		// }
 		// 1.更新数据库
-		user.setModifyTime(DateUtil.getServerDate());
-		userDAO.updateById(user);
+		int i = userDAO.updateById(user);
 		// 2.更新缓存
 		String key = Constants.USER_KEY + user.getUsername();
 		redisUtil.setCacheObject(key, user);
 		// TODO 依赖问题 3.更新token
 	}
 
+	@ApiDoc(value = "逻辑删除", description = "逻辑删除", responseClassDescription = "逻辑删除")
 	@Override
 	public void deleteUserByLogic(int id)
 	{
@@ -127,9 +99,37 @@ public class UserServiceImpl implements UserService
 		userDAO.updateById(user);
 	}
 
+	@ApiDoc(value = "物理删除", description = "物理删除", responseClassDescription = "物理删除")
 	@Override
-	public void deleteUserById(int id)
+	public void deleteUser(int id)
 	{
 		userDAO.deleteById(id);
+	}
+
+	/**
+	 * 处理查询wrapper
+	 * @param params
+	 * @return
+	 */
+	private QueryWrapper<DmUser> buildQueryWrapper(DmUserQueryParams params)
+	{
+		QueryWrapper<DmUser> wrapper = new QueryWrapper<>();
+		if (params.getUsername() != null)
+		{
+			wrapper.like("username", params.getUsername());
+		}
+		if (params.getNickname() != null)
+		{
+			wrapper.like("nickname", params.getNickname());
+		}
+		if (params.getEmail() != null)
+		{
+			wrapper.like("email", params.getEmail());
+		}
+		if (params.getStatus() != null)
+		{
+			wrapper.eq("status", params.getStatus());
+		}
+		return wrapper;
 	}
 }

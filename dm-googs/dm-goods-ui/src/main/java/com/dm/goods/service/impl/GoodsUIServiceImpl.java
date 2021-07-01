@@ -1,13 +1,12 @@
 package com.dm.goods.service.impl;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.dm.goods.param.GoodsQueryParams;
 import com.dm.goods.po.Goods;
 import com.dm.goods.service.GoodsService;
 import com.dm.goods.service.GoodsUIService;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 /**
  * <p>标题：</p>
  * <p>功能：</p>
@@ -28,14 +27,32 @@ public class GoodsUIServiceImpl implements GoodsUIService
 	GoodsService goodsService;
 
 	@Override
-	public List<Goods> queryGoodsListUI(GoodsQueryParams params)
+	public Page<Goods> queryPageUI(GoodsQueryParams params)
 	{
-		return goodsService.queryGoodsList(params);
+		return goodsService.queryPage(params);
 	}
 
 	@Override
-	public int queryTotalUI(GoodsQueryParams params)
+	public Goods queryGoodsUI(GoodsQueryParams params)
 	{
-		return goodsService.queryTotal(params);
+		return goodsService.queryGoods(params);
+	}
+
+	@Override
+	public void addGoodsUI(Goods goods)
+	{
+		goodsService.addGoods(goods);
+	}
+
+	@Override
+	public void updateGoodsUI(Goods goods)
+	{
+		goodsService.updateGoods(goods);
+	}
+
+	@Override
+	public void deleteGoodsUI(int id)
+	{
+		goodsService.deleteGoods(id);
 	}
 }

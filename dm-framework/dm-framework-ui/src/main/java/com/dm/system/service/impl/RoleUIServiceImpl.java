@@ -1,13 +1,12 @@
 package com.dm.system.service.impl;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.dm.system.param.DmRoleQueryParams;
 import com.dm.system.po.DmRole;
 import com.dm.system.service.RoleService;
 import com.dm.system.service.RoleUIService;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 /**
  * <p>标题：</p>
  * <p>功能：</p>
@@ -28,15 +27,15 @@ public class RoleUIServiceImpl implements RoleUIService
 	RoleService roleService;
 
 	@Override
-	public List<DmRole> queryListUI(DmRoleQueryParams params)
+	public Page<DmRole> queryPageUI(DmRoleQueryParams params)
 	{
-		return roleService.queryList(params);
+		return roleService.queryPage(params);
 	}
 
 	@Override
-	public int queryTotalUI(DmRoleQueryParams params)
+	public DmRole queryRoleUI(DmRoleQueryParams params)
 	{
-		return roleService.queryTotal(params);
+		return roleService.queryRole(params);
 	}
 
 	@Override
@@ -58,8 +57,8 @@ public class RoleUIServiceImpl implements RoleUIService
 	}
 
 	@Override
-	public void deleteRoleByIdUI(int id)
+	public void deleteRoleUI(int id)
 	{
-		roleService.deleteRoleById(id);
+		roleService.deleteRole(id);
 	}
 }

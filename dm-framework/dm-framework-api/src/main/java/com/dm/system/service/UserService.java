@@ -1,11 +1,10 @@
 package com.dm.system.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.dm.system.param.DmUserQueryParams;
 import com.dm.system.po.DmUser;
-
-import java.util.List;
 /**
- * <p>标题：</p>
+ * <p>标题：用户service接口</p>
  * <p>功能：</p>
  * <pre>
  * 其他说明：
@@ -20,23 +19,23 @@ import java.util.List;
 public interface UserService
 {
 	/**
-	 * 查询所有用户
+	 * 查询用户分页数据
 	 * @return 用户列表
 	 */
-	List<DmUser> queryList(DmUserQueryParams params);
+	Page<DmUser> queryPage(DmUserQueryParams params);
 
 	/**
-	 * 查询总数量
-	 * @param params
-	 * @return
-	 */
-	int queryTotal(DmUserQueryParams params);
-
-	/**
-	 * 根据用户名查找
+	 * 查询用户信息
 	 * @return 用户对象
 	 */
-	DmUser queryUserByUserName(String username);
+	DmUser queryUser(DmUserQueryParams params);
+
+	/**
+	 * 根据用户名查询用户信息
+	 * @param username
+	 * @return
+	 */
+	DmUser queryUserByUsername(String username);
 
 	/**
 	 * 用户注册
@@ -57,8 +56,8 @@ public interface UserService
 	void deleteUserByLogic(int id);
 
 	/**
-	 * 根据用户id删除用户
+	 * 物理删除
 	 * @param id id
 	 */
-	void deleteUserById(int id);
+	void deleteUser(int id);
 }

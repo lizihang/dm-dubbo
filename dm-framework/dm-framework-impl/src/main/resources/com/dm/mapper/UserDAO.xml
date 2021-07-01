@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.dm.system.dao.UserDAO">
 
+    <!-- mybatis-plus 实现
     <select id="queryList" resultType="DmUser" parameterType="DmUserQueryParams">
         select
         id, username, password, nickname, email, phone, gender, avatar, status, create_user, modify_time, modify_user, create_time
@@ -64,7 +65,7 @@
         values (#{id}, #{username}, #{password}, #{nickname}, #{email}, #{phone}, #{gender}, #{avatar}, #{status}, #{createUser}, #{createTime}, #{modifyUser}, #{modifyTime})
     </insert>
 
-    <!-- mybatis-plus 实现
+
     <update id="myUpdate" parameterType="DmUser">
         update dm_user
         <set>

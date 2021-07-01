@@ -1,9 +1,8 @@
 package com.dm.system.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.dm.system.param.DmRoleQueryParams;
 import com.dm.system.po.DmRole;
-
-import java.util.List;
 /**
  * <p>标题：</p>
  * <p>功能：</p>
@@ -23,14 +22,13 @@ public interface RoleUIService
 	 * 查询所有角色
 	 * @return 用户列表
 	 */
-	List<DmRole> queryListUI(DmRoleQueryParams params);
+	Page<DmRole> queryPageUI(DmRoleQueryParams params);
 
 	/**
-	 * 查询总数量
-	 * @param params
-	 * @return
+	 * 查询角色信息
+	 * @return 用户对象
 	 */
-	int queryTotalUI(DmRoleQueryParams params);
+	DmRole queryRoleUI(DmRoleQueryParams params);
 
 	/**
 	 * 新增角色
@@ -54,5 +52,5 @@ public interface RoleUIService
 	 * 根据用户id删除用户
 	 * @param id id
 	 */
-	void deleteRoleByIdUI(int id);
+	void deleteRoleUI(int id);
 }

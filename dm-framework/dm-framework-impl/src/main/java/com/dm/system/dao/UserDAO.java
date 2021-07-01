@@ -1,11 +1,8 @@
 package com.dm.system.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.dm.system.param.DmUserQueryParams;
 import com.dm.system.po.DmUser;
 import org.apache.ibatis.annotations.Mapper;
-
-import java.util.List;
 /**
  * <p>标题：</p>
  * <p>功能：</p>
@@ -22,11 +19,4 @@ import java.util.List;
 @Mapper
 public interface UserDAO extends BaseMapper<DmUser>
 {
-	List<DmUser> queryList(DmUserQueryParams params);
-
-	int queryTotal(DmUserQueryParams params);
-
-	DmUser queryUserByUserName(String username);
-
-	void save(DmUser user);
 }

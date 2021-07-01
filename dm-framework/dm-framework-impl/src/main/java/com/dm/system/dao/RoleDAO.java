@@ -1,10 +1,8 @@
 package com.dm.system.dao;
 
-import com.dm.system.param.DmRoleQueryParams;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.dm.system.po.DmRole;
 import org.apache.ibatis.annotations.Mapper;
-
-import java.util.List;
 /**
  * <p>标题：</p>
  * <p>功能：</p>
@@ -19,15 +17,6 @@ import java.util.List;
  * 查看帮助：<a href="" target="_blank"></a>
  */
 @Mapper
-public interface RoleDAO
+public interface RoleDAO extends BaseMapper<DmRole>
 {
-	List<DmRole> queryList(DmRoleQueryParams params);
-
-	int queryTotal(DmRoleQueryParams params);
-
-	void save(DmRole role);
-
-	void update(DmRole role);
-
-	void deleteById(int id);
 }

@@ -1,5 +1,6 @@
 package com.dm.system.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.dm.system.annotation.DmLog;
 import com.dm.system.param.DmUserQueryParams;
 import com.dm.system.po.DmUser;
@@ -46,30 +47,32 @@ public class UserController
 
 	/**
 	 * 查询所有用户列表
-	 * @return result
+	 * @param params 查询条件
+	 * @return 分页数据
 	 */
 	@DmLog
 	@GetMapping("queryUserList")
 	@PreAuthorize("@ps.permission('user:query')")
-	public Result queryList(DmUserQueryParams params)
+	public Result queryUserList(DmUserQueryParams params)
 	{
 		Map<String,Object> data = new HashMap<>();
-		data.put("list", userUIService.queryListUI(params));
-		data.put("total", userUIService.queryTotalUI(params));
+		Page<DmUser> page = userUIService.queryPageUI(params);
+		data.put("list", page.getRecords());
+		data.put("total", page.getTotal());
 		return Result.success("查询用户列表成功", data);
 	}
 
 	/**
 	 * 根据用户名查询用户信息
-	 * @param username 用户名
+	 * @param params 查询条件
 	 * @return 用户信息
 	 */
 	@DmLog
 	@GetMapping("queryUser")
 	@PreAuthorize("@ps.permission('user:query')")
-	public Result queryUser(String username)
+	public Result queryUser(DmUserQueryParams params)
 	{
-		DmUser user = userUIService.queryUserByUserNameUI(username);
+		DmUser user = userUIService.queryUserUI(params);
 		return Result.success("查询用户成功", user);
 	}
 
@@ -83,7 +86,9 @@ public class UserController
 	public Result queryUserInfo()
 	{
 		LoginUser loginUser = jwtTokenUtil.getLoginUser(ServletUtil.getRequest());
-		return Result.success("查询用户信息成功", loginUser.getUser());
+		String username = loginUser.getUsername();
+		DmUser user = userUIService.queryUserByUsernameUI(username);
+		return Result.success("查询用户信息成功", user);
 	}
 
 	/**
@@ -190,7 +195,7 @@ public class UserController
 	@PreAuthorize("@ps.permission('user:delete')")
 	public Result deleteCompletely(@PathVariable("userId") int userId)
 	{
-		userUIService.deleteUserByIdUI(userId);
+		userUIService.deleteUserUI(userId);
 		return Result.success("删除成功，用户id：" + userId);
 	}
 }

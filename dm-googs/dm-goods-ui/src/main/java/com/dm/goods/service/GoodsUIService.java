@@ -1,11 +1,10 @@
 package com.dm.goods.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.dm.goods.param.GoodsQueryParams;
 import com.dm.goods.po.Goods;
-
-import java.util.List;
 /**
- * <p>标题：</p>
+ * <p>标题：商品UIService</p>
  * <p>功能：</p>
  * <pre>
  * 其他说明：
@@ -20,16 +19,34 @@ import java.util.List;
 public interface GoodsUIService
 {
 	/**
-	 * 查询商品列表
+	 * 查询商品分页信息
 	 * @param params
 	 * @return
 	 */
-	List<Goods> queryGoodsListUI(GoodsQueryParams params);
+	Page<Goods> queryPageUI(GoodsQueryParams params);
 
 	/**
-	 * 查询商品表
+	 * 查询商品信息
 	 * @param params
 	 * @return
 	 */
-	int queryTotalUI(GoodsQueryParams params);
+	Goods queryGoodsUI(GoodsQueryParams params);
+
+	/**
+	 * 新增商品信息
+	 * @param goods
+	 */
+	void addGoodsUI(Goods goods);
+
+	/**
+	 * 修改商品信息
+	 * @param goods
+	 */
+	void updateGoodsUI(Goods goods);
+
+	/**
+	 * 删除商品信息
+	 * @param id
+	 */
+	void deleteGoodsUI(int id);
 }

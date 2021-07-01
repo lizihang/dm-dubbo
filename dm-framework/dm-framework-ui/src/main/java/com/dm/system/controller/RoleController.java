@@ -1,5 +1,6 @@
 package com.dm.system.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.dm.system.annotation.DmLog;
 import com.dm.system.param.DmRoleQueryParams;
 import com.dm.system.po.DmRole;
@@ -43,8 +44,9 @@ public class RoleController
 	public Result queryList(DmRoleQueryParams params)
 	{
 		Map<String,Object> data = new HashMap<>();
-		data.put("list", roleUIService.queryListUI(params));
-		data.put("total", roleUIService.queryTotalUI(params));
+		Page<DmRole> page = roleUIService.queryPageUI(params);
+		data.put("list", page.getRecords());
+		data.put("total", page.getTotal());
 		return Result.success("查询角色列表成功", data);
 	}
 
@@ -100,7 +102,7 @@ public class RoleController
 	@PreAuthorize("@ps.permission('user:delete')")
 	public Result deleteCompletely(int id)
 	{
-		roleUIService.deleteRoleByIdUI(id);
+		roleUIService.deleteRoleUI(id);
 		return Result.success("删除成功，角色id：" + id);
 	}
 }
