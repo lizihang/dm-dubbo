@@ -1,6 +1,8 @@
 package com.dm.goods.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.dm.goods.param.GoodsQueryParams;
+import com.dm.goods.po.Goods;
 import com.dm.goods.service.GoodsUIService;
 import com.dm.system.annotation.DmLog;
 import com.dm.vo.Result;
@@ -43,8 +45,9 @@ public class GoodsController
 	public Result queryList(GoodsQueryParams params)
 	{
 		Map<String,Object> data = new HashMap<>();
-		data.put("list", goodsUIService.queryGoodsListUI(params));
-		data.put("total", goodsUIService.queryTotalUI(params));
+		Page<Goods> goodsPage = goodsUIService.queryPageUI(params);
+		data.put("list", goodsPage.getRecords());
+		data.put("total", goodsPage.getTotal());
 		return Result.success("查询商品列表成功", data);
 	}
 }

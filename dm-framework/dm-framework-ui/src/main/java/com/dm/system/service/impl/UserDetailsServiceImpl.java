@@ -42,7 +42,7 @@ public class UserDetailsServiceImpl implements UserDetailsService
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
 	{
-		DmUser user = userUIService.queryUserByUserNameUI(username);
+		DmUser user = userUIService.queryUserByUsernameUI(username);
 		if (user == null)
 		{
 			throw new UsernameNotFoundException("登录用户：" + username + " 不存在");
