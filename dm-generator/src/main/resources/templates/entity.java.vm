@@ -17,12 +17,11 @@ import lombok.ToString;
 import lombok.experimental.Accessors;
 #end
 #end
-
 /**
- * <p>标题：mybatis-plus自动生成po</p>
+ * <p>标题：</p>
  * <p>功能：</p>
  * <pre>
- * 其他说明：
+ * 其他说明：MyBatis-Plus自动生成PO
  * </pre>
  * <p>作者：${author}</p>
  * <p>审核：</p>

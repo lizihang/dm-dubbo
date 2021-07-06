@@ -28,7 +28,7 @@ public class MyVelocityTemplateEngine extends VelocityTemplateEngine
 		Calendar c = Calendar.getInstance();
 		c.setTime(new Date());
 		objectMap.put("YEAR", c.get(Calendar.YEAR));
-		objectMap.put("MONTH", c.get(Calendar.MONTH));
+		objectMap.put("MONTH", c.get(Calendar.MONTH) + 1);
 		objectMap.put("DAY", c.get(Calendar.DATE));
 		objectMap.put("TIME", c.get(Calendar.HOUR_OF_DAY) + ":" + c.get(Calendar.MINUTE));
 		return objectMap;
