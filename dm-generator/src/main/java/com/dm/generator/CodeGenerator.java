@@ -24,7 +24,7 @@ import java.util.Scanner;
  * 优点：
  * 		1.根据表生成各个层的类，节省时间
  * 		2.可以根据模板生成，例如模板:/templates/entity.java.vm
- * 		3.复杂一点可以做到将代码生成到不同的模块下
+ * 		3.可以将代码生成到不同的模块下
  * 缺点：
  * 		1.只能生成单表
  * 		2.PO对象如何排除BasePO的字段？
@@ -34,8 +34,7 @@ import java.util.Scanner;
  * 		1.根据输入的模块路径，将类分别生成到其目录下（xxx-api,xxx-service,xxx-ui）
  * 		2.xxx-impl模块service注解@DubboService
  * 		3.修改文件生成模板，达到定制目的
- * 待优化：
- * 		1.mapper.xml想放到impl模块resource/com/dm/mapper目录下
+ * 		4.mapper.xml输出路径修改为xxx-impl模块resource/com/dm/mapper目录下
  * </pre>
  * <p>作者：lizh</p>
  * <p>审核：</p>
@@ -125,7 +124,7 @@ public class CodeGenerator
 		for (String module : modules)
 		{
 			String mPath = modulePath + "-" + module;
-			System.out.println("是否生成<" + mPath + ">模块代码？输入quit跳过此模块");
+			System.out.println("输入任意字符生成<" + mPath + ">模块代码，输入quit跳过此模块");
 			String operate = scanner2();
 			if ("quit".equals(operate))
 			{
