@@ -6,7 +6,7 @@
 
     <parent>
         <groupId>com.dm</groupId>
-        <artifactId>parent</artifactId>
+        <artifactId>dm-dubbo-parent</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
