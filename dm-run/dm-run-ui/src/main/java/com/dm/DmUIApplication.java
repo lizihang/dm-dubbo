@@ -4,6 +4,7 @@ import com.dm.util.SystemUtil;
 import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 /**
  * <p>标题：</p>
  * <p>功能：</p>
@@ -17,7 +18,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * <p>类全名：com.dm.DmUIApplication</p>
  * 查看帮助：<a href="" target="_blank"></a>
  */
-@SpringBootApplication
+@SpringBootApplication(exclude={ DataSourceAutoConfiguration.class})	// 2021-12-02 UI端启动不需要配置数据库，exclude={ DataSourceAutoConfiguration.class}
 @EnableDubbo    // 开启dubbo
 public class DmUIApplication
 {
