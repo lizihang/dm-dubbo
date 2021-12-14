@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 @SpringBootApplication
 @EnableDubbo                    // 开启dubbo
-@EnableDubboApiDocs                // 开启dubbo api
+@EnableDubboApiDocs             // 开启dubbo api
 @EnableTransactionManagement    // 开启事务
 public class DmServiceApplication
 {

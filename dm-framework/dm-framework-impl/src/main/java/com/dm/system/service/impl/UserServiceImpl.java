@@ -11,6 +11,7 @@ import com.dm.util.RedisUtil;
 import org.apache.dubbo.apidocs.annotations.ApiDoc;
 import org.apache.dubbo.apidocs.annotations.ApiModule;
 import org.apache.dubbo.config.annotation.DubboService;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 /**
@@ -79,6 +80,7 @@ public class UserServiceImpl implements UserService
 
 	@ApiDoc(value = "更新用户", description = "更新用户", responseClassDescription = "更新用户")
 	@Override
+	@Transactional
 	public void updateUser(DmUser user)
 	{
 		// 1.更新数据库
@@ -87,6 +89,10 @@ public class UserServiceImpl implements UserService
 		String key = Constants.USER_KEY + user.getUsername();
 		redisUtil.setCacheObject(key, user);
 		// TODO 依赖问题 3.更新token
+		if (user.getId() == 12)
+		{
+			throw new RuntimeException("test");
+		}
 	}
 
 	@ApiDoc(value = "逻辑删除", description = "逻辑删除", responseClassDescription = "逻辑删除")
