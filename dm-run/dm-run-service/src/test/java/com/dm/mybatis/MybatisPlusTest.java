@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import javax.annotation.Resource;
 import java.util.List;
 /**
- * <p>标题：</p>
+ * <p>标题：MybatisPlus测试类</p>
  * <p>功能：</p>
  * <pre>
  * 其他说明：
@@ -34,7 +34,7 @@ public class MybatisPlusTest
 	UserDAO userDAO;
 
 	/**
-	 *
+	 * 测试插入
 	 */
 	@Test
 	public void testInsert()
@@ -48,7 +48,7 @@ public class MybatisPlusTest
 	}
 
 	/**
-	 *
+	 * 测试更新
 	 */
 	@Test
 	public void testUpdate()
@@ -62,7 +62,7 @@ public class MybatisPlusTest
 	}
 
 	/**
-	 *
+	 * 测试删除
 	 */
 	@Test
 	public void testDelete()
@@ -71,7 +71,7 @@ public class MybatisPlusTest
 	}
 
 	/**
-	 *
+	 * 测试查询
 	 */
 	@Test
 	public void testSelect()
@@ -84,7 +84,7 @@ public class MybatisPlusTest
 	}
 
 	/**
-	 *
+	 * 测试条件wrapper
 	 */
 	@Test
 	public void testSelectWrapper()

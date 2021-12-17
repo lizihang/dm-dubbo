@@ -13,6 +13,10 @@ spring:
   # 非web启动
   main:
     web-application-type: none
+  # 自定义redisson配置
+  redisson:
+    # 自定义的key，RedissonConfig中配置使用
+    type: single
 # mybatis配置
 #mybatis:
 #  # classpath*:能加载多个路径下的资源文件
@@ -70,6 +74,7 @@ dubbo:
     version: 1.0.0
     # 统一配置分组
     group: dubbo
+
 
 
 

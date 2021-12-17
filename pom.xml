@@ -25,6 +25,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring-boot.version>2.3.4.RELEASE</spring-boot.version>
+        <redisson.version>3.16.6</redisson.version>
         <dubbo.version>2.7.8</dubbo.version>
         <dubbo.api.version>2.7.8.3</dubbo.api.version>
         <curator.version>5.1.0</curator.version>
@@ -73,11 +74,6 @@
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-data-redis</artifactId>
-                <version>${spring-boot.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-quartz</artifactId>
                 <version>${spring-boot.version}</version>
             </dependency>
@@ -103,8 +99,15 @@
             <dependency>
                 <groupId>org.redisson</groupId>
                 <artifactId>redisson-spring-boot-starter</artifactId>
-                <version>3.16.6</version>
+                <version>${redisson.version}</version>
             </dependency>
+            <!-- 依赖了redisson-spring-boot-starter就不需要依赖这个
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-redis</artifactId>
+                <version>${spring-boot.version}</version>
+            </dependency>
+            -->
 
             <!-- dubbo -->
             <dependency>
