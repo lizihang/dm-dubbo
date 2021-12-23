@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.dm.po.BasePO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,6 +29,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString(callSuper = true)
+@JsonInclude // 字段值为null时也序列化，加在类上所有字段生效，也可以单独加字段上
 public class DmUser extends BasePO
 {
 	private static final long    serialVersionUID = -8121407232554708400L;
@@ -37,6 +40,7 @@ public class DmUser extends BasePO
 	private              String  username;
 	/** 密码 */
 	@JSONField(serialize = false)
+	@JsonIgnore // Redisson配置了JsonJacksonCodec序列化方式，序列化时使用此注解忽略该字段
 	private              String  password;
 	/** 昵称 */
 	private              String  nickname;
