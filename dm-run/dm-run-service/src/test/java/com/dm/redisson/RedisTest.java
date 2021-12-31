@@ -4,9 +4,7 @@ import com.dm.DmServiceApplication;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.redis.core.HashOperations;
-import org.springframework.data.redis.core.ListOperations;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.*;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
@@ -30,6 +28,14 @@ public class RedisTest
 {
 	@Resource
 	RedisTemplate<String,String> redisTemplate;
+
+	@Test
+	public void testRedisString(){
+		ValueOperations<String,String> opsForValue = redisTemplate.opsForValue();
+		opsForValue.set("redis-key:1","value1");
+		opsForValue.set("redis-key:2","value1");
+		opsForValue.set("redis-key:3","value1");
+	}
 
 	@Test
 	public void testRedisHash()

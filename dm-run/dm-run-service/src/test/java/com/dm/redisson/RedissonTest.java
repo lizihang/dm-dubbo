@@ -2,13 +2,16 @@ package com.dm.redisson;
 
 import com.dm.DmServiceApplication;
 import com.dm.system.po.DmUser;
+import com.google.errorprone.annotations.Var;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.redisson.api.*;
+import org.redisson.client.protocol.ScoredEntry;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
+import java.util.Collection;
 import java.util.concurrent.TimeUnit;
 /**
  * <p>标题：Redisson测试类</p>
@@ -69,6 +72,60 @@ public class RedissonTest
 		boolean b1 = userMap.fastPut("user2", "fastput user2 password2");
 		boolean b2 = userMap.fastPut("user2", "fastput2 user2 password2");
 		System.out.println(o1 + "==" + o2 + "==" + b1 + "==" + b2);
+	}
+
+	@Test
+	public void testRedissonSet()
+	{
+		RSet<String> set = redisson.getSet("set");
+		RSortedSet<String> sortedset = redisson.getSortedSet("sortedset");
+	}
+
+	@Test
+	public void testRedissonZSet()
+	{
+		// 创建zset
+		RScoredSortedSet<String> zset = redisson.getScoredSortedSet("zset:test1");
+		// 存数据
+		zset.add(1.1, "value1");
+		zset.add(3.3, "value2");
+		zset.add(2.2, "value3");
+		zset.add(4.4, "value4");
+		// 获取评分最高
+		Double firstScore = zset.firstScore();
+		// 获取评分最低
+		Double lastScore = zset.lastScore();
+		System.out.println("firstScore:" + firstScore);
+		System.out.println("lastScore:" + lastScore);
+		// 获取排名，升序
+		Integer rank = zset.rank("value1");
+		// 获取排名，降序
+		Integer revRank = zset.revRank("value1");
+		System.out.println("rank:" + rank);
+		System.out.println("revRank:" + revRank);
+		// 增加积分（或减少）
+		// zset.addScore("value1", 1.1);
+		// rank = zset.rank("value1");
+		// revRank = zset.revRank("value1");
+		// System.out.println("rank:" + rank);
+		// System.out.println("revRank:" + revRank);
+		// 根据积分范围获取set，升序
+		Collection<String> strings = zset.valueRange(1, true, 3, true);
+		strings.forEach(System.out::println);
+		// 根据积分范围获取collection，带分数和value，升序
+		Collection<ScoredEntry<String>> scoredEntries = zset.entryRange(1, true, 4, true);
+		scoredEntries.forEach(entry -> System.out.println(entry.getValue() + ":" + entry.getScore()));
+		Collection<String> strings1 = zset.valueRange(0, -1);
+		strings1.forEach(System.out::println);
+		Collection<String> strings2 = zset.valueRangeReversed(-1, -2);
+		strings2.forEach(System.out::println);
+	}
+
+	@Test
+	public void testRedissonZSetOther(){
+		RScoredSortedSet<String> zset = redisson.getScoredSortedSet("zset:test1");
+		Integer rank = zset.addAndGetRank(2.5, "new value");
+		System.out.println(rank);
 	}
 
 	@Test

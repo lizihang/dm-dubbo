@@ -79,7 +79,8 @@ public class RedisConfig
 	*/
 
 	/**
-	 * TODO 待测Jackson2JsonRedisSerializer和FastJson2JsonRedisSerializer的区别
+	 * TODO 1.待测Jackson2JsonRedisSerializer和FastJson2JsonRedisSerializer的区别
+	 * TODO 2.整合redisson的时候里面exclude了jedis，所以@Qualifier("redissonConnectionFactory")可以不加了
 	 * @param factory factory
 	 * @return redisTemplate
 	 */
