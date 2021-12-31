@@ -2,7 +2,6 @@ package com.dm.redisson;
 
 import com.dm.DmServiceApplication;
 import com.dm.system.po.DmUser;
-import com.google.errorprone.annotations.Var;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.redisson.api.*;
@@ -13,6 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import javax.annotation.Resource;
 import java.util.Collection;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Stream;
 /**
  * <p>标题：Redisson测试类</p>
  * <p>功能：</p>
@@ -32,6 +32,21 @@ public class RedissonTest
 {
 	@Resource
 	RedissonClient redisson;
+
+	@Test
+	public void testRedisson()
+	{
+		RKeys keys = redisson.getKeys();
+		Stream<String> keysStreamByPattern = keys.getKeysStreamByPattern("redis-key*");
+		keysStreamByPattern.forEach(System.out::println);
+		Iterable<String> keysByPattern = keys.getKeysByPattern("redis-key*");
+		for (String s : keysByPattern)
+		{
+			System.out.println(s);
+		}
+		long num = keys.deleteByPattern("redis-key*");
+		System.out.println("根据Pattern删除key的数量：" + num);
+	}
 
 	@Test
 	public void testRedissonBucket()
@@ -122,7 +137,8 @@ public class RedissonTest
 	}
 
 	@Test
-	public void testRedissonZSetOther(){
+	public void testRedissonZSetOther()
+	{
 		RScoredSortedSet<String> zset = redisson.getScoredSortedSet("zset:test1");
 		Integer rank = zset.addAndGetRank(2.5, "new value");
 		System.out.println(rank);
