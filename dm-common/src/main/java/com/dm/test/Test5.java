@@ -26,4 +26,55 @@ package com.dm.test;
  */
 public class Test5
 {
+	private static final String all = "abcdefghijklmnopqrstuvwxyz";
+
+	public static void main(String[] args)
+	{
+		String s1 = "ab";
+		String s2 = "eidboaoo";
+		boolean result = deal(s1, s2);
+		System.out.println("result:" + result);
+	}
+
+	private static boolean deal(String str1, String str2)
+	{
+		// 1.处理子串
+		int[] arr1 = new int[26];
+		dealOne(str1, arr1);
+		// 2.处理
+		for (int i = 0; i < str2.length() - str1.length(); i++)
+		{
+			int[] arr2 = new int[26];
+			String s = str2.substring(i, i + str1.length());
+			dealOne(s, arr2);
+			boolean b = compareArr(arr1, arr2);
+			if (b)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private static void dealOne(String str, int[] arr)
+	{
+		for (int i = 0; i < str.length(); i++)
+		{
+			String _s = str.substring(i, i + 1);
+			int index = all.indexOf(_s);
+			arr[index] += 1;
+		}
+	}
+
+	private static boolean compareArr(int[] arr1, int[] arr2)
+	{
+		for (int i = 0; i < arr1.length; i++)
+		{
+			if (arr1[i] != arr2[i])
+			{
+				return false;
+			}
+		}
+		return true;
+	}
 }
