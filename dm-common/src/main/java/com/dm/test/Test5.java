@@ -38,6 +38,10 @@ public class Test5
 
 	private static boolean deal(String str1, String str2)
 	{
+		if (str1.length() > str2.length())
+		{
+			return false;
+		}
 		// 1.处理子串
 		int[] arr1 = new int[26];
 		dealOne(str1, arr1);
