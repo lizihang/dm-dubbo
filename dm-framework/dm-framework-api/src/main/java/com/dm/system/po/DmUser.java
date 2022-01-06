@@ -8,10 +8,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.dm.po.BasePO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 /**
  * <p>标题：</p>
  * <p>功能：</p>
@@ -29,6 +26,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 @JsonInclude // 字段值为null时也序列化，加在类上所有字段生效，也可以单独加字段上
 public class DmUser extends BasePO
 {

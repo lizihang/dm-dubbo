@@ -3,6 +3,8 @@ package com.dm.config;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,6 +27,7 @@ import java.io.IOException;
 @Configuration
 public class RedissonConfig
 {
+	final static Logger logger = LoggerFactory.getLogger(RedissonConfig.class);
 	/**
 	 * single：单机模式
 	 * master：主从模式
@@ -32,13 +35,13 @@ public class RedissonConfig
 	 * cluster：集群模式
 	 */
 	@Value("${spring.redisson.type}")
-	private String redisType;
+	private      String redisType;
 
 	@Bean
 	RedissonClient redisson()
 	{
+		logger.info("redisType:" + redisType);
 		RedissonClient redisson;
-		System.out.println("redisType:" + redisType);
 		switch (redisType)
 		{
 		case "master":

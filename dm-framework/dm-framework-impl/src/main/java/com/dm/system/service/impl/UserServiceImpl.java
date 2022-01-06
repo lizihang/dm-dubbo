@@ -11,6 +11,9 @@ import com.dm.util.RedisUtil;
 import org.apache.dubbo.apidocs.annotations.ApiDoc;
 import org.apache.dubbo.apidocs.annotations.ApiModule;
 import org.apache.dubbo.config.annotation.DubboService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.lang.NonNull;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
@@ -31,10 +34,14 @@ import javax.annotation.Resource;
 @DubboService
 public class UserServiceImpl implements UserService
 {
+	// logger
+	static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 	@Resource
 	UserDAO   userDAO;
 	@Resource
 	RedisUtil redisUtil;
+	// beanName
+	private String beanName;
 
 	@ApiDoc(value = "查询用户分页数据", description = "查询用户分页数据", responseClassDescription = "用户分页数据")
 	@Override
@@ -137,5 +144,22 @@ public class UserServiceImpl implements UserService
 			wrapper.eq("status", params.getStatus());
 		}
 		return wrapper;
+	}
+
+	@Override
+	public void setBeanName(@NonNull String name)
+	{
+		logger.info("========== BeanNameAware ==========");
+		this.beanName = name;
+		logger.info("beanName:{}", this.beanName);
+		logger.info("========== BeanNameAware ==========");
+	}
+
+
+	@Override
+	@NonNull
+	public String getBeanName()
+	{
+		return this.beanName;
 	}
 }

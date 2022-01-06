@@ -63,6 +63,12 @@
             <artifactId>mybatis-plus-boot-starter</artifactId>
         </dependency>
 
+        <!-- validator -->
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+        </dependency>
+
         <!-- lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>

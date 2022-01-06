@@ -3,6 +3,8 @@ package com.dm.system.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.dm.system.param.DmUserQueryParams;
 import com.dm.system.po.DmUser;
+import org.springframework.beans.factory.BeanNameAware;
+import org.springframework.beans.factory.NamedBean;
 /**
  * <p>标题：用户service接口</p>
  * <p>功能：</p>
@@ -16,7 +18,7 @@ import com.dm.system.po.DmUser;
  * <p>类全名：com.dm.system.service.UserService</p>
  * 查看帮助：<a href="" target="_blank"></a>
  */
-public interface UserService
+public interface UserService extends BeanNameAware, NamedBean
 {
 	/**
 	 * 查询用户分页数据

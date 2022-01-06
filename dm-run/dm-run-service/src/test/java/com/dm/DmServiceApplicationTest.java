@@ -34,6 +34,13 @@ public class DmServiceApplicationTest
 	UserService userService;
 
 	@Test
+	public void testBeanNameAware()
+	{
+		String beanName = userService.getBeanName();
+		System.out.println(beanName);
+	}
+
+	@Test
 	public void testSpringUtil()
 	{
 		Map<String,UserService> userServiceMap = SpringUtil.getBeansOfType(UserService.class);
