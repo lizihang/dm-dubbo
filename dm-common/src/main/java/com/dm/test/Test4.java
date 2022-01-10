@@ -1,5 +1,6 @@
 package com.dm.test;
 
+import java.util.LinkedList;
 /**
  * <p>标题：华为一面编程题1</p>
  * <p>功能：</p>
@@ -19,27 +20,6 @@ package com.dm.test;
  */
 public class Test4
 {
-	private static volatile Test4 test4;
-
-	private Test4()
-	{
-	}
-
-	public static Test4 getInstance()
-	{
-		if (test4 == null)
-		{
-			synchronized (Test4.class)
-			{
-				if (test4 == null)
-				{
-					test4 = new Test4();
-				}
-			}
-		}
-		return test4;
-	}
-
 	public static void main(String[] args)
 	{
 		String str = "([][][][]{]}{}({{}}))";
@@ -47,6 +27,13 @@ public class Test4
 		System.out.println(deal);
 	}
 
+	/**
+	 * 方法一：遍历字符串，用一个int数组存储三种括号的次数，
+	 * 如果左括号，对应数组位置数值+1，如果右括号-1。
+	 * 此种方法逻辑没有问题，但是实现复杂。需要记录括号出现的顺序。
+	 * @param str
+	 * @return
+	 */
 	private static boolean deal(String str)
 	{
 		String a = "([{";
@@ -110,13 +97,22 @@ public class Test4
 		return true;
 	}
 
+	/**
+	 * 方法二：StringBuilder实现，类似栈的思想，先进后出。
+	 * 如果当前的括号是左括号则入栈，
+	 * 如果是右括号，则判断前一个括号是不是其对应的左括号：
+	 * 如果是则弹出左括号，不是则返回false。
+	 * 最终StringBuilder为空说明括号成对消除了，返回true。
+	 * @param str
+	 * @return
+	 */
 	private static boolean deal2(String str)
 	{
-		StringBuilder sb = new StringBuilder();
 		if (str == null || str.length() == 0)
 		{
 			return true;
 		}
+		StringBuilder sb = new StringBuilder();
 		int len = str.length();
 		String a = "([{";
 		String b = ")]}";
@@ -160,6 +156,69 @@ public class Test4
 		} else
 		{
 			System.out.println(sb.toString());
+			return false;
+		}
+	}
+
+	/**
+	 * 方法三：LinkedList实现，类似栈的思想，先进后出。
+	 * 如果当前的括号是左括号则入栈，
+	 * 如果是右括号，则判断前一个括号是不是其对应的左括号：
+	 * 如果是则弹出左括号，不是则返回false。
+	 * 最终LinkedList为空说明括号成对消除了，返回true。
+	 * @param str
+	 * @return
+	 */
+	private static boolean deal3(String str)
+	{
+		if (str == null || str.length() == 0)
+		{
+			return true;
+		}
+		LinkedList<String> list = new LinkedList<>();
+		int len = str.length();
+		String a = "([{";
+		String b = ")]}";
+		for (int i = 0; i < len; i++)
+		{
+			String _s = str.substring(i, i + 1);
+			if (i == 0)
+			{
+				if (a.contains(_s))
+				{
+					list.add(_s);
+				} else
+				{
+					return false;
+				}
+			} else
+			{
+				// 如果左括号，直接拼接
+				if (a.contains(_s))
+				{
+					list.add(_s);
+				} else
+				{
+					//如果是右括号
+					String last = list.getLast();
+					// 如果前一个是对应的左括号，那么消掉
+					if (b.indexOf(_s) == a.indexOf(last))
+					{
+						list.removeLast();
+					} else
+					{
+						//	如果不是，
+						return false;
+					}
+				}
+			}
+		}
+		if (list.size() == 0)
+		{
+			return true;
+		} else
+		{
+			list.forEach(System.out::println);
 			return false;
 		}
 	}
