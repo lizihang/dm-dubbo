@@ -29,7 +29,7 @@ public class Constants
 	public static final String   LOGIN_USER_KEY        = "login_user:";
 	/** 请求中TOKEN名 */
 	public static final String   TOKEN_HEADER          = "Authorization";
-	/** 令牌前缀 */
+	/** 令牌前缀 注意后边带空格*/
 	public static final String   TOKEN_PREFIX          = "Bearer ";
 	/** 私钥 */
 	public static final String   TOKEN_SECRET_KEY      = "dm_security";

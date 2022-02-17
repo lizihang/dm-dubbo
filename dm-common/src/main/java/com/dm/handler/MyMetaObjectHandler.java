@@ -31,10 +31,11 @@ public class MyMetaObjectHandler implements MetaObjectHandler
 		log.info("start insert fill ....");
 		Date date = DateUtil.getServerDate();
 		// TODO 获取当前登录人
-		String user = "";
-		this.strictInsertFill(metaObject, "createUser", String.class, user);
+		// String usernameFromToken = jwtTokenUtil.getUsernameFromToken(ServletUtil.getRequest());
+		String usernameFromToken = "";
+		this.strictInsertFill(metaObject, "createUser", String.class, usernameFromToken);
 		this.strictInsertFill(metaObject, "createTime", Date.class, date);
-		this.strictInsertFill(metaObject, "modifyUser", String.class, user);
+		this.strictInsertFill(metaObject, "modifyUser", String.class, usernameFromToken);
 		this.strictInsertFill(metaObject, "modifyTime", Date.class, date);
 	}
 
