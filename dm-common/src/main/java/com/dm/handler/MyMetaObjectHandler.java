@@ -45,8 +45,9 @@ public class MyMetaObjectHandler implements MetaObjectHandler
 		log.info("start update fill ....");
 		Date date = DateUtil.getServerDate();
 		// TODO 获取当前登录人
-		String user = "";
-		this.strictInsertFill(metaObject, "modifyUser", String.class, user);
-		this.strictInsertFill(metaObject, "modifyTime", Date.class, date);
+		// String usernameFromToken = jwtTokenUtil.getUsernameFromToken(ServletUtil.getRequest());
+		String usernameFromToken = "";
+		this.strictUpdateFill(metaObject, "modifyUser", String.class, usernameFromToken);
+		this.strictUpdateFill(metaObject, "modifyTime", Date.class, date);
 	}
 }
