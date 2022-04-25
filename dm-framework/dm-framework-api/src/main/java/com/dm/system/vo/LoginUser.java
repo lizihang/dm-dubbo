@@ -1,10 +1,11 @@
 package com.dm.system.vo;
 
 import com.dm.constant.Constants;
+import com.dm.system.po.DmUser;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.security.core.CredentialsContainer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import com.dm.system.po.DmUser;
 
 import java.util.Collection;
 import java.util.Date;
@@ -23,6 +24,7 @@ import java.util.Set;
  * <p>类全名：com.dm.system.vo.LoginUser</p>
  * 查看帮助：<a href="" target="_blank"></a>
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class LoginUser implements UserDetails, CredentialsContainer
 {
 	private static final long                   serialVersionUID = -7485423641482415004L;

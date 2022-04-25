@@ -1,9 +1,7 @@
 package com.dm.system.po;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.dm.po.BasePO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -47,11 +45,10 @@ public class DmUser extends BasePO
 	/** 手机号 */
 	private              String  phone;
 	/** 性别 */
-	private              int     gender;
+	private              Integer gender;
 	/** 头像 */
 	private              String  avatar;
 	/** 状态 */
-	@TableField(fill = FieldFill.INSERT)
 	private              String  status;
 
 	/*

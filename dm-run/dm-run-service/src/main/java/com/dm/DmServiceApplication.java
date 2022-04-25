@@ -6,6 +6,12 @@ import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import java.lang.management.ManagementFactory;
+import java.lang.management.RuntimeMXBean;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * <p>标题：</p>
  * <p>功能：</p>
@@ -23,11 +29,24 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableDubbo                    // 开启dubbo
 @EnableDubboApiDocs             // 开启dubbo api
 @EnableTransactionManagement    // 开启事务
-public class DmServiceApplication
-{
-	public static void main(String[] args)
-	{
-		SystemUtil.getSystemInfo();
-		SpringApplication.run(DmServiceApplication.class, args);
-	}
+public class DmServiceApplication {
+    public static void main(String[] args) {
+        SystemUtil.getSystemInfo();
+        SpringApplication.run(DmServiceApplication.class, args);
+        getInfo();
+    }
+
+    private static void getInfo() {
+        RuntimeMXBean runtimeMXBean = ManagementFactory.getRuntimeMXBean();
+        try {
+            while (true) {
+                Date date = new Date(runtimeMXBean.getStartTime());
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                System.out.println("服务器启动时间：" + sdf.format(date));
+                Thread.sleep(5000);
+            }
+        } catch (Exception e) {
+            System.out.println("err");
+        }
+    }
 }

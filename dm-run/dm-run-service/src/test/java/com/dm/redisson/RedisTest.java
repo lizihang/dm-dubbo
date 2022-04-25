@@ -57,6 +57,8 @@ public class RedisTest
 		}
 		Object v1 = opsForHash.get("dm_user", "user_id_1");
 		System.out.println("v1:" + v1);
+		Long delete = opsForHash.delete("dm_user", "user_id_1");
+		System.out.println("delete:" + delete);
 	}
 
 	@Test

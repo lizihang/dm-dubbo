@@ -38,7 +38,7 @@ public class SQLTest
 	 * 向user表随机插入数据，用于sql优化
 	 */
 	@Test
-	public void insertRadomData()
+	public void insertRandomData()
 	{
 		List<SQLUser> data = new ArrayList<>();
 		for (int i = 0; i < 9000; i++)
